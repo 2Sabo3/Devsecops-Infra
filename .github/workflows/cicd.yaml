@@ -111,7 +111,7 @@ jobs:
           
           # Update the deployment file directly
           sed -i "s|image: ${ECR_REGISTRY}/.*|image: ${NEW_IMAGE}|g" kubernetes/deployment.yaml
-          
+          cat kubernetes/deployment.yaml
           # Verify the change
           echo "Updated deployment to use image: ${NEW_IMAGE}"
           grep -A 1 "image:" kubernetes/deployment.yaml
