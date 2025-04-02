@@ -47,8 +47,6 @@ jobs:
   build-docker-image:
     name: Docker Build and Push
     runs-on: ubuntu-latest
-    outputs:
-        ecr_registry: ${{ steps.login-ecr.outputs.registry }}
     needs: [security-checks]  # This job runs after the security-checks job.
     steps:
       - name: Checkout code
@@ -89,10 +87,14 @@ jobs:
         run: |
           git config user.name "Github Actions"
           git config user.email "actions@github.com"
+      
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
 
       - name: Update the Kubernetes File
         env:
-          ECR_REGISTRY: ${{ needs.build-docker-image.outputs.ecr_registry }}
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: starbucks
           IMAGE_TAG: ${{ github.sha }}
         run: |
