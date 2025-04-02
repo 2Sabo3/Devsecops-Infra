@@ -1,0 +1,40 @@
+version: 0.2
+
+
+phases:
+  install:
+    commands:
+      - echo Entered the install phase...
+      - apt-get update -y
+      - sudo apt-get install wget apt-transport-https gnupg
+      - wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | gpg --dearmor | sudo tee /usr/share/keyrings/trivy.gpg > /dev/null
+      - echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb generic main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
+      - sudo apt-get update
+      - sudo apt-get install trivy -y
+      - sudo apt-get install jdk17 -y
+      - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+      - curl -sSfL https://raw.githubusercontent.com/docker/scout-cli/main/install.sh | sh -s -- -b /usr/local/bin
+
+  pre_build:
+    commands:
+      - echo Trivy Scan
+      - trivy fs . > trivy.txt
+      - 
+
+   
+
+  build:
+    commands:
+      - echo Entered the build phase...
+      - echo Build started on `date`
+      - mvn install
+
+  post_build:
+    commands:
+      - echo Entered the post_build phase...
+      - echo Build completed on `date`
+
+artifacts:
+  files:
+    - '**/*'  
+
