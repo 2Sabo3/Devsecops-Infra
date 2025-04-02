@@ -98,9 +98,9 @@ jobs:
         run: |
           # Define the new image with tag
           NEW_IMAGE="${ECR_REGISTRY}/${ECR_REPOSITORY}:${IMAGE_TAG}"
-
+          echo $NEW_IMAGE
           # Update the deployment file directly
-          sed -i "s|image: ${ECR_REGISTRY}/.*|image: ${NEW_IMAGE}|g" kubernetes/deployment.yaml
+           yq eval -i '.spec.template.spec.containers[0].image = env(ECR_REGISTRY) + "/" + env(ECR_REPOSITORY) + ":" + env(IMAGE_TAG)' kubernetes/deployment.yaml
           cat kubernetes/deployment.yaml
           # Verify the change
           echo "Updated deployment to use image: ${NEW_IMAGE}"
