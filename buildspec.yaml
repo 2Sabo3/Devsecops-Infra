@@ -19,7 +19,7 @@ phases:
     commands:
       - echo Trivy Scan
       - trivy fs . > trivy.txt
-      - 
+
 
    
 
