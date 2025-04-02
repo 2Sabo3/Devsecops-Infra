@@ -87,6 +87,7 @@ jobs:
     name: Update Kubernetes Deployment
     runs-on: ubuntu-22.04
     needs: [build-docker-image]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
