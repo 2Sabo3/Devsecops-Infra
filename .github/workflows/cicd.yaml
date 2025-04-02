@@ -47,6 +47,8 @@ jobs:
   build-docker-image:
     name: Docker Build and Push
     runs-on: ubuntu-latest
+    outputs:
+        ecr_registry: ${{ steps.login-ecr.outputs.registry }}
     needs: [security-checks]  # This job runs after the security-checks job.
     steps:
       - name: Checkout code
@@ -90,7 +92,7 @@ jobs:
 
       - name: Update the Kubernetes File
         env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REGISTRY: ${{ needs.build-docker-image.outputs.ecr_registry }}
           ECR_REPOSITORY: starbucks
           IMAGE_TAG: ${{ github.sha }}
         run: |
