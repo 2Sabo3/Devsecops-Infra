@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: starbucks-ingress
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/idle-timeout: "60"
+  #  alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:region:account-id:certificate/certificate-id
+    alb.ingress.kubernetes.io/backend-protocol: HTTP
+  #  alb.ingress.kubernetes.io/load-balancer-attributes: access_logs.s3.enabled=true,access_logs.s3.bucket=your-s3-bucket,access_logs.s3.prefix=alb-access-logs
+    alb.ingress.kubernetes.io/additional-security-groups: sg-xxxxxxxxxxxxxxxxx,sg-yyyyyyyyyyyyyyyyy
+  #  alb.ingress.kubernetes.io/waf-webacl-id: "your-webacl-id"
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+  #  alb.ingress.kubernetes.io/ssl-redirect: '443'  
+    alb.ingress.kubernetes.io/group-name: "starbucks-poc"
+    
+spec:
+  ingressClassName: alb
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: starbucks-poc-svc
+                port:
+                  number: 80

@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: tic-tac-toe
+  name: starbucks-poc
   labels:
-    app: tic-tac-toe
+    app: starbucks-poc
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: tic-tac-toe
+      app: starbucks-poc
   template:
     metadata:
       labels:
-        app: tic-tac-toe
+        app: starbucks-poc
     spec:
       containers:
-      - name: tic-tac-toe
-        image: 
+      - name: starbucks-poc
+        image: 975049886839.dkr.ecr.us-east-1.amazonaws.com/starbucks:69c5ee8a67d18cea626452ecd0b0db1010b58bbc
         # Image will be automatically updated by CI/CD pipeline
         imagePullPolicy: Always
         ports:
