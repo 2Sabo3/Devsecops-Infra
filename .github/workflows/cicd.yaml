@@ -67,7 +67,7 @@ jobs:
 
       - name: Build and tag Docker image
         env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.ecr_registry }}
           ECR_REPOSITORY: starbucks
           IMAGE_TAG: ${{ github.sha }}
         run: |
