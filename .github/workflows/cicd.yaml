@@ -83,6 +83,7 @@ jobs:
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG . --file Dockerfile
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+  
   update-k8s:
     name: Update Kubernetes Deployment
     runs-on: ubuntu-22.04
