@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: starbucks-poc
-          image: 975049886839.dkr.ecr.us-east-1.amazonaws.com/starbucks:6de94abf52d0b6b7251e2a1bf9802dacc4e8f140
+          image: 975049886839.dkr.ecr.us-east-1.amazonaws.com/starbucks:b71dac73295c3428a124bb257286ce1d14f673c6
           # Image will be automatically updated by CI/CD pipeline
           imagePullPolicy: Always
           ports:
