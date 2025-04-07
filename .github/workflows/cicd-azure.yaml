@@ -102,4 +102,4 @@ jobs:
         run: |
           git add kubernetes/deployment.yaml
           git commit -m "Update Kubernetes deployment with new image tag [skip ci]" || echo "No changes to commit"
-          git push
+          git push origin azure
